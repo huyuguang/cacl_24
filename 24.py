@@ -28,8 +28,15 @@ def calc(numbers, current, step):
                 if success[0]: return success
             
                 # try -
-                result = first - second
-                this_step = str(first) + "-" + str(second) + "=" + str(result)
+                if first >= second: 
+                    big = first
+                    small = second
+                else:
+                    big = second
+                    small = first
+
+                result = big - small
+                this_step = str(big) + "-" + str(small) + "=" + str(result)
                 # print(this_step)
                 new_current = copy.deepcopy(current)
                 del new_current[j]
@@ -38,22 +45,10 @@ def calc(numbers, current, step):
                 new_step.append(this_step)
                 success = calc(numbers, new_current, new_step)
                 if success[0]: return success
-
-                if (first != second):
-                    result = second - first
-                    this_step = str(second) + "-" + str(first) + "=" + str(result)
-                    # print(this_step)
-                    new_current = copy.deepcopy(current)
-                    del new_current[j]
-                    new_current[i]=result
-                    new_step = copy.deepcopy(step)
-                    new_step.append(this_step)                    
-                    success = calc(numbers, new_current, new_step)
-                    if success[0]: return success
                                 
                 # try *
                 result = first * second
-                this_step = str(first) + "*" + str(second) + "=" + str(result)
+                this_step = str(first) + chr(0xd7) + str(second) + "=" + str(result)
                 # print(this_step)
                 new_current = copy.deepcopy(current)
                 del new_current[j]
@@ -66,7 +61,7 @@ def calc(numbers, current, step):
                 # try /
                 if (second != 0 and first != 0):
                     result = first / second
-                    this_step = str(first) + "/" + str(second) + "=" + str(result)
+                    this_step = str(first) + chr(0xf7) + str(second) + "=" + str(result)
                     # print(this_step)
                     new_current = copy.deepcopy(current)
                     del new_current[j]
@@ -78,7 +73,7 @@ def calc(numbers, current, step):
             
                     if (first != second):
                         result = second / first
-                        this_step = str(second) + "/" + str(first) + "=" + str(result)
+                        this_step = str(second) + chr(0xf7) + str(first) + "=" + str(result)
                         # print(this_step)
                         new_current = copy.deepcopy(current)
                         del new_current[j]
@@ -98,15 +93,25 @@ def run_one(num):
     current = copy.deepcopy(numbers)
     step=[]
     success = calc(numbers,current,step)
-    print(num)
     if success[0] == False: 
-        print("fail")
+        print(num, "fail")
     else:
-        print("ok")
-        print(success[1])    
+        print(num, success[1])
     
+def run_all():
+    for i in range(1,14):
+        for j in range(i,14):
+            for k in range(j,14):
+                for m in range(k,14):
+                    run_one([i,j,k,m])
+    return
 
-run_one([5,6,9,11])
-run_one([1,4,7,11])
-run_one([6,9,9,10])
-run_one([7,8,11,10])    
+#run_one([5,6,9,11])
+#run_one([1,4,7,11])
+#run_one([6,9,9,10])
+#run_one([7,8,11,10])    
+#run_one([2,5,5,10])
+#run_one([3,3,7,7])
+#run_one([2,3,10,10])
+
+run_all()
