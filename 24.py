@@ -97,13 +97,22 @@ def run_one(num):
         print(num, "fail", "  ")
     else:
         print(num, success[1], "  ")
+    return success[0]
     
 def run_all():
+    fails=[]
     for i in range(1,14):
         for j in range(i,14):
             for k in range(j,14):
                 for m in range(k,14):
-                    run_one([i,j,k,m])
+                    num = [i,j,k,m]
+                    if run_one(num) == False:
+                        fails.append(num)
+    
+    print("fail list")
+    for i in fails:
+        print(i)
+        
     return
 
 #run_one([5,6,9,11])
