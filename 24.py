@@ -94,9 +94,9 @@ def run_one(num):
     step=[]
     success = calc(numbers,current,step)
     if success[0] == False: 
-        print(num, "fail")
+        print(num, "fail", "  ")
     else:
-        print(num, success[1])
+        print(num, success[1], "  ")
     
 def run_all():
     for i in range(1,14):
